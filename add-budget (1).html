@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Budget</title>
+    <style>
+        /* General Reset */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom right, #043927, #064663);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2em;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+        }
+
+        form {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            padding: 15px 25px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.6);
+            width: 90%;
+            max-width: 400px;
+            animation: fadeIn 0.6s ease-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        label {
+            display: block;
+            width: 100%;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        input, button {
+            width: 100%;
+            margin-bottom: 15px;
+            padding: 8px;
+            font-size: 0.9em;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+            transition: box-shadow 0.3s ease, background 0.3s ease;
+        }
+
+        input {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        input:focus {
+            box-shadow: 0px 0px 5px rgba(0, 255, 127, 0.7);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        button {
+            background: #007965;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background: #005f4b;
+            transform: translateY(-3px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        input:hover {
+            border-color: #00bfa6;
+        }
+
+        /* Center alignment */
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            form {
+                width: 90%;
+                padding: 10px 15px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Add Budget</h1>
+        <form action="/add-budget" method="POST">
+       <label for="BudgetID">Budget ID:</label>
+       <input type="number" id="BudgetID" name="BudgetID" placeholder="Enter Budget ID" required>
+
+
+            <label for="DepartmentID">Department ID:</label>
+            <input type="number" id="DepartmentID" name="DepartmentID" placeholder="Enter department ID" required>
+
+            <label for="AllocatedBudget">Allocated Budget:</label>
+            <input type="number" step="0.01" id="AllocatedBudget" name="AllocatedBudget" placeholder="Enter allocated budget" required>
+
+            <label for="UsedBudget">Used Budget:</label>
+            <input type="number" step="0.01" id="UsedBudget" name="UsedBudget" placeholder="Enter used budget" required>
+
+            <button type="submit">Add Budget</button>
+        </form>
+    </div>
+</body>
+</html>

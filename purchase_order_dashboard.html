@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase Order Dashboard</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Purchase Order Tracking</h1>
+    <table id="poTable">
+        <thead>
+            <tr>
+                <th>PO ID</th>
+                <th>Vendor</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will be populated here dynamically -->
+        </tbody>
+    </table>
+
+    <script>
+        // Fetch purchase orders from the backend
+        fetch('/getPurchaseOrders')
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.querySelector('#poTable tbody');
+                data.forEach(po => {
+                    const row = `<tr>
+                        <td>${po.poID}</td>
+                        <td>${po.vendorName}</td>
+                        <td>${po.status}</td>
+                        <td><button onclick="updateStatus(${po.poID})">Update</button></td>
+                    </tr>`;
+                    tableBody.innerHTML += row;
+                });
+            });
+
+        // Update status function
+        function updateStatus(poID) {
+            const newStatus = prompt("Enter new status for PO ID " + poID);
+            if (newStatus) {
+                // Call backend to update the status
+                fetch(`/updatePurchaseOrderStatus/${poID}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ status: newStatus })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    location.reload(); // Reload the page to fetch the updated data
+                })
+                .catch(error => console.error("Error updating status:", error));
+            }
+        }
+    </script>
+</body>
+</html>

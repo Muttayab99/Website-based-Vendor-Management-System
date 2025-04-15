@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page</title>
+    <!-- D3.js Library -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        /* Body styles with gradient and flex layout */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom right, #043927, #064663);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            justify-content: flex-start;
+            overflow-x: hidden;
+            opacity: 1;
+            transition: opacity 1s ease-out; /* Fade transition */
+        }
+
+        /* Header text styles */
+        .header-text {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            text-align: left;
+        }
+
+        .header-text h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            opacity: 0.9;
+        }
+
+        .header-text p {
+            margin: 5px 0 0;
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        /* Button container styles */
+        .button-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+	    opacity:0.9;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .button-container button {
+            background-color: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .button-container button:hover {
+            background-color: #555;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Content section */
+        .content {
+            text-align: center;
+            padding-top: 100px;
+            animation: fadeIn 3s ease-out;
+            flex-grow: 1;
+            position: relative;
+        }
+
+        /* Logo styles */
+.logo {
+    position: absolute;
+    top: 50%;
+    left: 53%;
+    transform: translate(-50%, -50%);
+    opacity: 0.8;
+    width: 450px;
+    height: 200px;
+    background-image: url('logo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.logo2 {
+    position: absolute;
+    top: calc(50% + 220px); /* Adjust to position beneath logo */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 1;
+    width: 450px;
+    height: 200px;
+    background-image: url('logo2.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+
+        /* Road and lane markings using SVG */
+        #road {
+            fill: #343333; /* Grey road */
+        }
+
+        .lane-marking {
+            fill: white; /* White lane markings */
+            animation: laneMarkingAnimation 1s infinite linear;
+        }
+
+        /* Truck Animation */
+        @keyframes moveTruck {
+            0% {
+                left: -200px;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+
+        .truck {
+            position: absolute;
+            bottom: 55px;
+            left: -200px;
+            width: 150px;
+            animation: moveTruck 5s linear infinite;
+        }
+
+        /* Fade in effect */
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Animation for lane markings (moving effect) */
+        @keyframes laneMarkingAnimation {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Text -->
+    <div class="header-text">
+        <h1>MH VENDORS</h1>
+        <p>Where Quality Meets Convenience!</p>
+    </div>
+
+    <!-- Button Container -->
+    <div class="button-container">
+        <button onclick="smoothTransition('about')">ABOUT</button>
+        <button onclick="smoothTransition('home')">OPERATIONS</button>
+        <button onclick="smoothTransition('visual')">VISUALIZATION</button>
+        <button onclick="smoothTransition('notification')">NOTIFICATION</button>
+	<button onclick="smoothTransition('contract_renewal')">CONTRACT RENEWAL</button>
+	<button onclick="smoothTransition('logout')">LOGOUT</button>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+    <div class="logo"></div>
+    <div class="logo2"></div>
+</div>
+
+
+    <!-- Road (SVG) -->
+    <svg id="road-container" width="100%" height="150px" viewBox="0 0 2000 150">
+        <!-- Road -->
+        <rect id="road" x="0" y="50" width="100%" height="100"/>
+
+        <!-- Lane Markings -->
+        <rect class="lane-marking" x="50" y="90" width="40" height="10"/>
+        <rect class="lane-marking" x="150" y="90" width="40" height="10"/>
+        <rect class="lane-marking" x="250" y="90" width="40" height="10"/>
+        <rect class="lane-marking" x="350" y="90" width="40" height="10"/>
+        <rect class="lane-marking" x="450" y="90" width="40" height="10"/>
+        <rect class="lane-marking" x="550" y="90" width="40" height="10"/>
+        <rect class="lane-marking" x="650" y="90" width="40" height="10"/>
+        <rect class="lane-marking" x="750" y="90" width="40" height="10"/>
+        <rect class="lane-marking" x="850" y="90" width="40" height="10"/>
+        <rect class="lane-marking" x="950" y="90" width="40" height="10"/>
+        <rect class="lane-marking" x="1050" y="90" width="40" height="10"/>
+        <rect class="lane-marking" x="1150" y="90" width="40" height="10"/>
+        <rect class="lane-marking" x="1250" y="90" width="40" height="10"/>
+        <rect class="lane-marking" x="1350" y="90" width="40" height="10"/>
+        <rect class="lane-marking" x="1450" y="90" width="40" height="10"/>
+        <rect class="lane-marking" x="1550" y="90" width="40" height="10"/>
+        <rect class="lane-marking" x="1650" y="90" width="40" height="10"/>
+        <rect class="lane-marking" x="1750" y="90" width="40" height="10"/>
+        <rect class="lane-marking" x="1850" y="90" width="40" height="10"/>
+        <rect class="lane-marking" x="1950" y="90" width="40" height="10"/>
+    </svg>
+
+    <!-- Truck Animation -->
+    <img class="truck" src="truck.png" alt="Truck" />
+
+    <!-- JavaScript -->
+    <script>
+        // Smooth Transition to Pages with fade-out effect
+        function smoothTransition(page) {
+            document.body.style.opacity = "0";
+            setTimeout(() => {
+                if (page === 'home') {
+                    window.location.href = "home.html";
+                } else if (page === 'visual') {
+                    window.location.href = "visual.html";
+                } else if (page === 'notification') {
+                    window.location.href = "notification.html";
+                } else if (page === 'contract_renewal') {
+                    window.location.href = "contract_renewal.html";
+		} else if (page === 'about') {
+                    window.location.href = "about.html";
+		}
+		 else if (page === 'logout') {
+                    window.location.href = "login.html";
+		}
+            }, 1000); 
+        }
+    </script>
+</body>
+</html>

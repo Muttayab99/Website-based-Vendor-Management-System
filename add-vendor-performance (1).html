@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Vendor Performance</title>
+    <style>
+        /* General Reset */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom right, #043927, #064663);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2em;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+        }
+
+        form {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            padding: 20px 30px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.6);
+            width: 90%;
+            max-width: 400px;
+            animation: fadeIn 0.6s ease-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        label {
+            display: block;
+            width: 100%;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        input[type="number"], input[type="date"], textarea {
+            width: 100%;
+            margin-bottom: 15px;
+            padding: 8px;
+            font-size: 0.9em;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+            transition: box-shadow 0.3s ease, background 0.3s ease;
+        }
+
+        input[type="number"], input[type="date"], textarea {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        input[type="number"]:focus, input[type="date"]:focus, textarea:focus {
+            box-shadow: 0px 0px 5px rgba(0, 255, 127, 0.7);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        input[type="number"]:hover, input[type="date"]:hover, textarea:hover {
+            border-color: #00bfa6;
+        }
+
+        input[type="submit"] {
+            background: #007965;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        input[type="submit"]:hover {
+            background: #005f4b;
+            transform: translateY(-3px);
+        }
+
+        input[type="submit"]:active {
+            transform: translateY(0);
+        }
+
+        /* Center alignment */
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            form {
+                width: 90%;
+                padding: 10px 15px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Add Vendor Performance</h1>
+        <form action="/add-vendor-performance" method="POST">
+            
+            <label for="PerformanceID">PerformanceID:</label>
+            <input type="number" id="PerformanceID" name="PerformanceID" placeholder="Enter Performance ID" required>
+
+            <label for="VendorID">Vendor ID:</label>
+            <input type="number" id="VendorID" name="VendorID" placeholder="Enter Vendor ID" required>
+
+            <label for="Rating">Rating (0 to 5):</label>
+            <input type="number" step="0.01" id="Rating" name="Rating" min="0" max="5" placeholder="Enter rating" required>
+
+            <label for="Feedback">Feedback:</label>
+            <textarea id="Feedback" name="Feedback" placeholder="Enter feedback" required></textarea>
+
+            <label for="EvaluationDate">Evaluation Date:</label>
+            <input type="date" id="EvaluationDate" name="EvaluationDate" required>
+
+            <input type="submit" value="Add Vendor Performance">
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Purchase Order</title>
+    <style>
+        /* General Reset */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom right, #043927, #064663);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2em;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+        }
+
+        form {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            padding: 15px 25px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.6);
+            width: 90%;
+            max-width: 400px;
+            animation: fadeIn 0.6s ease-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        label {
+            display: block;
+            width: 100%;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        input, textarea, button {
+            width: 100%;
+            margin-bottom: 15px;
+            padding: 8px;
+            font-size: 0.9em;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+            transition: box-shadow 0.3s ease, background 0.3s ease;
+        }
+
+        input, textarea {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        input:focus, textarea:focus {
+            box-shadow: 0px 0px 5px rgba(0, 255, 127, 0.7);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        button {
+            background: #007965;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background: #005f4b;
+            transform: translateY(-3px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        input:hover, textarea:hover {
+            border-color: #00bfa6;
+        }
+
+        /* Center alignment */
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            form {
+                width: 90%;
+                padding: 10px 15px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Add Purchase Order</h1>
+        <form id="purchaseOrderForm" action="/add-purchase-order" method="POST">
+            <label for="PurchaseOrderID">PurchaseOrder ID:</label>
+            <input type="number" id="PurchaseOrderID" name="PurchaseOrderID" placeholder="Enter PurchaseOrderID" required>	
+
+            <label for="DepartmentID">Department ID:</label>
+            <input type="number" id="DepartmentID" name="DepartmentID" placeholder="Enter Department ID" required>
+
+            <label for="VendorID">Vendor ID:</label>
+            <input type="number" id="VendorID" name="VendorID" placeholder="Enter vendor ID" required>
+
+            <label for="ItemDetails">Item Details:</label>
+            <textarea id="ItemDetails" name="ItemDetails" placeholder="Enter item details" required></textarea>
+
+            <label for="Quantity">Quantity:</label>
+            <input type="number" id="Quantity" name="Quantity" placeholder="Enter quantity" required>
+
+            <label for="TotalCost">Total Cost:</label>
+            <input type="number" step="0.01" id="TotalCost" name="TotalCost" placeholder="Enter total cost" required>
+
+            <label for="Status">Status:</label>
+            <input type="text" id="Status" name="Status" placeholder="Enter status" required>
+
+            <button type="submit">Add Purchase Order</button>
+        </form>
+    </div>
+
+    <script>
+        // Add event listener for form submission
+        const form = document.getElementById('purchaseOrderForm');
+
+        form.addEventListener('submit', (event) => {
+            console.log("Form submission started.");
+
+            // Retrieve and log input values for debugging
+            const purchaseOrderID = document.getElementById('PurchaseOrderID').value;
+            const departmentID = document.getElementById('DepartmentID').value;
+            const vendorID = document.getElementById('VendorID').value;
+            const itemDetails = document.getElementById('ItemDetails').value;
+            const quantity = document.getElementById('Quantity').value;
+            const totalCost = document.getElementById('TotalCost').value;
+            const status = document.getElementById('Status').value;
+
+            console.log("Form data:");
+            console.log("PurchaseOrderID:", purchaseOrderID);
+            console.log("DepartmentID:", departmentID);
+            console.log("VendorID:", vendorID);
+            console.log("ItemDetails:", itemDetails);
+            console.log("Quantity:", quantity);
+            console.log("TotalCost:", totalCost);
+            console.log("Status:", status);
+
+            // Optional: Basic client-side validation
+            if (!purchaseOrderID || !departmentID || !vendorID || !itemDetails || !quantity || !totalCost || !status) {
+                console.error("Validation failed: Missing required fields.");
+                alert("Please fill in all the fields.");
+                event.preventDefault(); // Prevent form submission
+                return;
+            }
+
+            console.log("Form validation passed. Proceeding with submission.");
+        });
+    </script>
+</body>
+</html>

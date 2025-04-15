@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Management System - Home</title>
+    <style>
+        /* General Body Styles */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom right, #043927, #064663);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Container for the button grid */
+        .container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 4 equal columns */
+            gap: 20px;
+            max-width: 90%;
+            margin: 0 auto;
+            padding: 40px;
+            border-radius: 15px;
+            background: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            width: 90%; /* Adjusted for a bigger container */
+        }
+
+        /* Header Styling */
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 30px;
+            color: #FFD700; /* Gold color for the title */
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Button Styles */
+        .button {
+            display: block;
+            padding: 20px;
+            font-size: 1.2rem;
+            background-color: #007965;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .button:hover {
+            background-color: #005f4b;
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Special style for the last button (center aligned) */
+        .last-button {
+            grid-column: span 4; /* Makes the last button span the entire width of the container */
+            text-align: center;
+        }
+
+        /* Animation for Button Text */
+        .button {
+            animation: fadeIn 1s ease-out;
+        }
+
+        /* Fade-in Animation for Buttons */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Media Query for Responsive Layout */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .container {
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+
+            .last-button {
+                grid-column: span 2;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .button {
+                font-size: 1rem;
+            }
+
+            .last-button {
+                grid-column: span 1;
+            }
+        }
+
+        /* Custom Styles for Home Button */
+        .button-container button {
+            background-color: rgba(0, 0, 0, 0.8); /* Adjusted opacity */
+            color: white;
+            padding: 12px;
+            border: none;
+            cursor: pointer;
+            width: 300px;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .button-container button:hover {
+            background-color: #043927; /* Adjusted hover color */
+        }
+
+        /* Button container styles */
+        .button-container {
+            position: absolute;
+            top: 40px;
+            right: 630px;
+            opacity: 0.8;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .button-container button {
+            background-color: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .button-container button:hover {
+            background-color: #555;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Content section */
+        .content {
+            text-align: center;
+            padding-top: 100px;
+            animation: fadeIn 3s ease-out;
+            flex-grow: 1;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <!-- Button Container -->
+    <div class="button-container">
+        <button onclick="smoothTransition('home')">HOME</button>
+    </div>
+
+    <div>
+        <h1>Welcome to the Vendor Management System</h1>
+        <div class="container">
+            <a href="add-budget.html" class="button">Add Budget</a>
+            <a href="add-contract.html" class="button">Add Contract</a>
+            <a href="add-department.html" class="button">Add Department</a>
+            <a href="add-notification.html" class="button">Add Notification</a>
+            <a href="add-purchase-order.html" class="button">Add Purchase Order</a>
+            <a href="add-role.html" class="button">Add Role</a>
+            <a href="add-user.html" class="button">Add User</a>
+            <a href="add-vendor.html" class="button">Add Vendor</a>
+            <a href="add-vendor-performance.html" class="button last-button">Add Vendor Performance</a> <!-- Last button center aligned -->
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Smooth Transition to Pages with fade-out effect
+        function smoothTransition(page) {
+            document.body.style.opacity = "0";
+            setTimeout(() => {
+                if (page === 'home') {
+                    window.location.href = "landing.html";
+                } 
+            }, 1000); 
+        }
+    </script>
+</body>
+</html>

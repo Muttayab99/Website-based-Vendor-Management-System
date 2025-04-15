@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications and Budget Check</title>
+    <style>
+        /* Basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom right, #043927, #064663);
+            color: #fff;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 8px;
+        }
+
+        h1, h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #notificationList, #budgetMessageList {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .notification-item, .budget-item {
+            background-color: #1e3c4c;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .notification-message, .budget-message {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .notification-date, .budget-date {
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        #errorMessage, #budgetErrorMessage {
+            color: red;
+            text-align: center;
+            display: none;
+        }
+
+        button {
+            background-color: #064663;
+            color: white;
+            padding: 12px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #043927;
+        }
+
+        .button-container {
+            position: absolute;
+            top: 5px;
+            right: 730px;
+            opacity: 0.8;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .button-container button {
+            background-color: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .button-container button:hover {
+            background-color: #555;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .content {
+            text-align: center;
+            padding-top: 100px;
+            animation: fadeIn 3s ease-out;
+            flex-grow: 1;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Button Container -->
+    <div class="button-container">
+        <button onclick="smoothTransition('home')">HOME</button>
+    </div>
+
+    <div class="container">
+        <h1>Notifications</h1>
+        <div id="errorMessage">Error fetching notifications. Please try again later.</div>
+        <ul id="notificationList"></ul>
+    </div>
+
+    <div class="container">
+        <h2>Budget Check</h2>
+        <div id="budgetErrorMessage">Error fetching budget messages. Please try again later.</div>
+        <ul id="budgetMessageList"></ul>
+    </div>
+
+    <script>
+        async function loadNotifications() {
+            try {
+                const response = await fetch('/notifications');
+                const data = await response.json();
+
+                if (data.success) {
+                    const notificationList = document.getElementById('notificationList');
+                    data.notifications.forEach((notification) => {
+                        const li = document.createElement('li');
+                        li.classList.add('notification-item');
+
+                        // Create the notification content
+                        const message = document.createElement('div');
+                        message.classList.add('notification-message');
+                        message.textContent = notification.MessageText;
+
+                        const date = document.createElement('div');
+                        date.classList.add('notification-date');
+                        date.textContent = `Date: ${new Date(notification.CreatedAt).toLocaleDateString()}`;
+
+                        // Append message and date to notification item
+                        li.appendChild(message);
+                        li.appendChild(date);
+
+                        // Append the notification item to the list
+                        notificationList.appendChild(li);
+                    });
+                } else {
+                    document.getElementById('errorMessage').style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('errorMessage').style.display = 'block';
+            }
+        }
+
+        async function loadBudgetMessages() {
+    try {
+        const response = await fetch('/budget-check');  // Use correct endpoint '/budget-check'
+        const data = await response.json();
+
+        if (data.success) {
+            const budgetMessageList = document.getElementById('budgetMessageList');
+            data.budgetMessages.forEach((message) => {
+                const li = document.createElement('li');
+                li.classList.add('budget-item');
+
+                // Create the budget message content
+                const budgetMessage = document.createElement('div');
+                budgetMessage.classList.add('budget-message');
+                budgetMessage.textContent = message.MessageText;
+
+                const date = document.createElement('div');
+                date.classList.add('budget-date');
+                date.textContent = `Date: ${new Date(message.CreatedAt).toLocaleDateString()}`;
+
+                // Append message and date to budget item
+                li.appendChild(budgetMessage);
+                li.appendChild(date);
+
+                // Append the budget item to the list
+                budgetMessageList.appendChild(li);
+            });
+        } else {
+            document.getElementById('budgetErrorMessage').style.display = 'block';
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        document.getElementById('budgetErrorMessage').style.display = 'block';
+    }
+}
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadNotifications();
+            loadBudgetMessages();
+        });
+
+        function smoothTransition(page) {
+            document.body.style.opacity = "0";
+            setTimeout(() => {
+                if (page === 'home') {
+                    window.location.href = "landing.html";
+                }
+            }, 1000);
+        }
+    </script>
+
+</body>
+</html>

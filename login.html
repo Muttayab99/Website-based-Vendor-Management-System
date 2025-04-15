@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            background: linear-gradient(to bottom right, #043927, #064663); /* Gradient background */
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+            transition: opacity 1s ease; /* Fade-out transition */
+            flex-direction: column;
+        }
+        .welcome-text {
+            font-size: 2em;
+            font-weight: bold;
+            color: #fff;
+            margin-top: 5px;
+            text-align: center;
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
+        }
+        .container {
+            display: flex;
+            width: 80%;
+            max-width: 1200px;
+            height: 70%;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        .image-container {
+            flex: 1;
+            background: url('abc.png') no-repeat center center;
+            background-size: cover;
+        }
+        .form-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+        }
+        .form-container h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+        .form-container input {
+            width: 80%;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .form-container button {
+            width: 80%;
+            padding: 10px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .form-container button:hover {
+            background: #2980b9;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+    <script>
+        function authenticate() {
+            // Get input values
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Authentication logic
+            const validUsers = {
+                "Harris": "FASTMH123",
+		"harris": "FASTMH123",
+		"HARRIS": "FASTMH123",
+		"muttayab": "FASTMH123",
+		"MUTTAYAB": "FASTMH123",
+                "Muttayab": "FASTMH123"
+            };
+
+            if (validUsers[username] === password) {
+                // Apply fade-out effect
+                document.body.style.opacity = "0";
+                setTimeout(() => {
+                    // Redirect to Home.html after the fade-out
+                    window.location.href = "landing.html";
+                }, 1000); // Wait for 1 second (1000ms) to match the fade-out duration
+            } else {
+                // Display error message if authentication fails
+                const errorElement = document.getElementById('error');
+                errorElement.textContent = "Incorrect username or password. Please try again.";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="welcome-text">VENDOR MANAGEMENT SYSTEM</div> <!-- WELCOME text at the top center -->
+    <div class="container">
+        <div class="image-container"></div> <!-- Left side with image -->
+        <div class="form-container">
+            <h2>Login to Your Account</h2>
+            <input type="text" id="username" placeholder="Username">
+            <input type="password" id="password" placeholder="Password">
+            <button onclick="authenticate()">Login</button>
+            <div id="error" class="error"></div>
+        </div>
+    </div>
+</body>
+</html>

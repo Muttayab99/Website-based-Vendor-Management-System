@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contract Renewal</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom right, #043927, #064663);
+            color: #fff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 50%;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 15px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        input:disabled, textarea:disabled {
+            background-color: #e0e0e0;
+        }
+        button {
+            background-color: #064663;
+            color: white;
+            padding: 12px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #043927;
+        }
+	/* Button container styles */
+        .button-container {
+            position: absolute;
+            top: 5px;
+            right: 730px;
+	    opacity:0.8;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .button-container button {
+            background-color: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .button-container button:hover {
+            background-color: #555;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Content section */
+        .content {
+            text-align: center;
+            padding-top: 100px;
+            animation: fadeIn 3s ease-out;
+            flex-grow: 1;
+            position: relative;
+        }
+
+
+
+
+
+
+
+
+
+
+
+    </style>
+</head>
+<body>
+	<!-- Button Container -->
+    <div class="button-container">
+        <button onclick="smoothTransition('home')">HOME</button>
+
+    </div>
+
+
+
+    <div class="container">
+        <h1>Contract Renewal</h1>
+        <form id="renewal-form">
+            <label for="vendor-id">Enter Vendor ID:</label>
+            <input type="number" id="vendor-id" name="vendor-id" required min="1" pattern="^[0-9]+$" title="Please enter a valid numeric Vendor ID.">
+
+            <label for="contract-start">Start Date:</label>
+            <input type="text" id="contract-start" name="contract-start" disabled>
+
+            <label for="contract-end">End Date:</label>
+            <input type="text" id="contract-end" name="contract-end" disabled>
+
+            <label for="contract-terms">Terms:</label>
+            <textarea id="contract-terms" name="contract-terms" disabled></textarea>
+
+            <label for="new-end-date">New End Date:</label>
+            <input type="date" id="new-end-date" name="new-end-date" required>
+
+            <button type="submit" aria-label="Renew Contract">Renew Contract</button>
+        </form>
+    </div>
+
+    <script>
+        // Debug statement for checking if the script is loaded
+        console.log('Frontend script loaded.');
+
+        // Fetch contract details when Vendor ID changes
+        document.getElementById('vendor-id').addEventListener('change', function () {
+            const vendorID = this.value.trim();
+            console.log('Vendor ID changed:', vendorID);
+
+            if (vendorID) {
+                console.log('Fetching contract details for Vendor ID:', vendorID);
+                fetch(`/getContractDetails/${vendorID}`)
+                    .then(response => {
+                        if (!response.ok) throw new Error('Failed to fetch contract details');
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Contract details fetched:', data);
+                        if (data) {
+                            document.getElementById('contract-start').value = data.StartDate || 'N/A';
+                            document.getElementById('contract-end').value = data.EndDate || 'N/A';
+                            document.getElementById('contract-terms').value = data.Terms || 'N/A';
+                        } else {
+                            console.error('No data found');
+                            throw new Error('No data found');
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Error fetching contract details:', err);
+                        alert('Could not fetch contract details. Please try again.');
+                    });
+            } else {
+                console.log('No Vendor ID entered.');
+            }
+        });
+
+        // Handle form submission to renew contract
+        // Handle form submission to renew contract
+	document.getElementById('renewal-form').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    const vendorID = document.getElementById('vendor-id').value.trim();
+    const newEndDate = document.getElementById('new-end-date').value;
+
+    console.log('Form submitted with Vendor ID:', vendorID, 'New End Date:', newEndDate);
+
+    if (!vendorID || !newEndDate) {
+        console.error('Missing required fields.');
+        alert('Please fill in all required fields.');
+        return;
+    }
+
+    fetch('/renewContract', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ vendorID, newEndDate })
+    })
+        .then(response => {
+            console.log('Received response from /renewContract:', response);
+            if (!response.ok) throw new Error('Failed to renew contract');
+            return response.json();
+        })
+        .then(data => {
+            console.log('Renew contract response data:', data);
+            if (data.success) {
+                // Directly redirect to success page without showing an alert
+                window.location.href = 'success.html'; // Redirect to success page
+            } else {
+                console.error('Renewal failed:', data.message);
+                throw new Error(data.message || 'Renewal failed');
+            }
+        })
+        .catch(err => {
+            console.error('Error renewing contract:', err);
+            alert('Could not renew contract. Please try again.');
+        });
+});
+
+	    	
+
+</script>
+
+
+    <script>
+        // Smooth Transition to Pages with fade-out effect
+        function smoothTransition(page) {
+            console.log('Initiating smooth transition to:', page);
+            document.body.style.opacity = "0";
+            setTimeout(() => {
+                if (page === 'home') {
+                    window.location.href = "landing.html";
+                }
+            }, 1000);
+        }
+    </script>
+
+
+	
+</body>
+</html>
